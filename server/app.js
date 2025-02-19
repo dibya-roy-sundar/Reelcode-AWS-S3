@@ -11,6 +11,7 @@ const passport = require('passport');
 
 
 const error = require('./middlewares/error');
+const userRoutes = require('./routes/user');
 
 const dbUrl = process.env.ATLAS_URL || "mongodb://127.0.0.1:27017/Reelcode";
 mongoose.connect(dbUrl)
@@ -32,6 +33,8 @@ app.use(passport.initialize());
 
 
 
+
+app.use('/api/v0',userRoutes)
 
 app.use(error);
 

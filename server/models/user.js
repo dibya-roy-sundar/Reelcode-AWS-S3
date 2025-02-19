@@ -52,6 +52,7 @@ const userSchema = new Schema(
     premium: {
       // talk to creator price
       type: Number,
+      default: 50
     },
     reelCount: { type: Number, default: 0 },
   },
@@ -59,6 +60,25 @@ const userSchema = new Schema(
 );
 
 
+userSchema.methods.getJWTToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE,
+  });
+}
+
+userSchema.statics.findAndValidate = async function (userDetails, password) {
+  const foundUser = await this.findOne(
+      {
+          $or: [{ username: userDetails.toLowerCase() }, { email: userDetails }]
+      }
+  ).select("+password");
+  //if a user is found, this means that the username is already in use
+  if (!foundUser) return false;
+  if(!foundUser.password) return false;
+  //if username is unique, then we will verify the password
+  const isValid = await bcrypt.compare(password, foundUser.password);
+  return isValid ? foundUser : false;
+}
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
