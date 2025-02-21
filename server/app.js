@@ -8,12 +8,14 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const passport = require('passport');
 // const cors = require('cors');
+// const helmet = require('helmet');
+// const csurf = require('csurf');
 
 
 const error = require('./middlewares/error');
 const userRoutes = require('./routes/user');
 
-const dbUrl = process.env.ATLAS_URL || "mongodb://127.0.0.1:27017/Reelcode";
+const dbUrl = process.env.ATLAS_URL ;
 mongoose.connect(dbUrl)
     .then(() => {
         console.log('mongo database connected');
@@ -29,6 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
+// app.use(helmet());
+// app.use(csurf({ cookie: true }));
 app.use(passport.initialize());
 
 

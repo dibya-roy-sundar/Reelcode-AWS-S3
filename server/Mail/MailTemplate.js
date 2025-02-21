@@ -32,6 +32,9 @@ module.exports.MailTemplate = (otp) => {
             border-radius: 8px;
             padding: 40px 20px;
         }
+        span{
+            color:white;
+        }
 
         /* Custom Logo Styles */
         .logo-container {
@@ -125,6 +128,10 @@ module.exports.MailTemplate = (otp) => {
             font-size: 12px;
             margin-top: 32px;
         }
+        
+        .instructions span{
+            font-size:1.2rem;
+        }
 
         @media only screen and (max-width: 480px) {
             body {
@@ -163,16 +170,16 @@ module.exports.MailTemplate = (otp) => {
         
         <div class="header">
             <h1>Verify your email</h1>
-            <p>Please enter the verification code sent to your email address</p>
+            <p>Please enter this verification code to verify your account in <a style="text-decoration: none;" href=${process.env.CLIENT_URL}><span>Reelcode</span></a> </p>
         </div>
 
         <div class="otp-container">
-           ${otp}
+           <span>${otp}</span>
         </div>
 
         <div class="instructions">
-            This code will expire in <strong>${process.env.OTP_EXPIRY / 60}</strong> minutes.<br>
-            If you didn't request this code, you can safely ignore this email.
+            This code will expire in  <span><strong>${process.env.OTP_EXPIRY / 60}</strong></span>  minutes.<br>
+            If you didn't request this code, you can  ignore this email.
         </div>
 
         <div class="social-links">

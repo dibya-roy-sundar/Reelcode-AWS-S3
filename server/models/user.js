@@ -7,11 +7,11 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is Required"],
+      // required: [true, "Name is Required"],
     },
     username: {
       type: String,
-      required: [true, "Username is Required"],
+      // required: [true, "Username is Required"],
       unique: true,
       index: true,
       lowercase:true, 
@@ -31,11 +31,11 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: [true, "Password is required"],
-      select:false,
+      // select:false,
     },
     avatar: {
-      url: { type: String, default: "https://default-avatar.com/default.png" },
-      filename: String,
+      url: { type: String, default: "" },//default empty string
+      key: String,
     },
     follower: [
       {
